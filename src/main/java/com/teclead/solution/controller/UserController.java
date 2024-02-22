@@ -1,5 +1,6 @@
 package com.teclead.solution.controller;
 
+import com.teclead.solution.exception.UserNotFoundException;
 import com.teclead.solution.model.User;
 import com.teclead.solution.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -27,14 +28,14 @@ public class UserController {
 
     // Endpoint for retrieving a user by ID
     @GetMapping("/{userId}")
-    public User getUserById(@PathVariable int userId) {
+    public User getUserById(@PathVariable int userId) throws UserNotFoundException {
         return service.getUserById(userId);
     }
 
     // Endpoint for updating a user
     @PutMapping("/update")
-    public void updateUser(@RequestBody User user) {
-        service.updateUser(user);
+    public void updateUser(@RequestBody User user) throws UserNotFoundException {
+        service.updateUser(user.getId());
     }
 
     // Endpoint for deleting a user by ID
@@ -48,7 +49,7 @@ public class UserController {
     public List<User> getAllUsers() {
         return service.getAllUsers();
     }
-    public ResponseEntity<User> getUserByEmail(String email) {
+    public ResponseEntity<User> getUserByEmail(String email) throws UserNotFoundException {
         return new ResponseEntity<>(this.service.getUserByEmail(email), HttpStatus.ACCEPTED);
     }
 }

@@ -1,6 +1,7 @@
 package com.teclead.solution.service;
 
 
+import com.teclead.solution.exception.UserNotFoundException;
 import com.teclead.solution.model.User;
 import com.teclead.solution.model.UserEntity;
 import com.teclead.solution.repository.UserRepository;
@@ -8,32 +9,44 @@ import com.teclead.solution.util.UserMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.stream.*;
+import java.util.Optional;
 
 import java.util.List;
 @Service
 public class UserService {
 
     UserRepository repository;
-    public User getUserByEmail(String email) {
-
-        return UserMapper.toUser(repository.findByEmail(email));
+    public UserEntity createUser(User user) {
+        return repository.save(UserMapper.toEntity(user));
     }
-
-    public void deleteUser(int userId) {
+    public User getUserById(int userId) throws UserNotFoundException {
+        Optional<UserEntity> entity = repository.findById(userId);
+        if (entity.isPresent())
+            return UserMapper.toUser(entity.get());
+        else {
+            throw new UserNotFoundException("User not found with id: " + userId);
+        }
     }
-
+    public User getUserByEmail(String email) throws UserNotFoundException {
+        Optional<UserEntity> entity = repository.findByEmail(email);
+        if (entity.isPresent())
+            return UserMapper.toUser(entity.get());
+        else {
+            throw new UserNotFoundException("User not found with email: " + email);
+        }
+    }
     public List<User> getAllUsers() {
         return new ArrayList<>();
     }
-
-    public void updateUser(User user) {
+    public void updateUser(int userId) throws UserNotFoundException {
+        Optional<UserEntity> entity = repository.findById(userId);
+        if (entity.isPresent()){
+            repository.save(entity.get());
+        }else {
+            throw new UserNotFoundException("User not found with id: " + userId);
+        }
     }
-
-    public User getUserById(int userId) {
-        return UserMapper.toUser(repository.findById(userId));
-    }
-
-    public void createUser(User user) {
+    public void deleteUser(int userId) {
+        repository.deleteById(userId);
     }
 }

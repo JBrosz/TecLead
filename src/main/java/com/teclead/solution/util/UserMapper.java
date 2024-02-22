@@ -7,8 +7,7 @@ import java.util.Optional;
 
 public class UserMapper {
 
-    public static User toUser(Optional<UserEntity> optionalUserEntityentity) {
-        UserEntity entity = optionalUserEntityentity.get();
+    public static User toUser(UserEntity entity) {
         return new User(entity.id(), entity.givenName(), entity.name(), entity.email());
     }
 
