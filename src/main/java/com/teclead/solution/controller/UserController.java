@@ -3,10 +3,7 @@ package com.teclead.solution.controller;
 import com.teclead.solution.exception.UserNotFoundException;
 import com.teclead.solution.model.User;
 import com.teclead.solution.service.UserService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,36 +17,28 @@ public class UserController {
         this.service = service;
     }
 
-    // Endpoint for creating a user
     @PostMapping("/create")
-    public void createUser(@RequestBody User user) {
+    public void createUser(User user) {
         service.createUser(user);
     }
-
-    // Endpoint for retrieving a user by ID
-    @GetMapping("/{userId}")
-    public User getUserById(@PathVariable int userId) throws UserNotFoundException {
-        return service.getUserById(userId);
-    }
-
-    // Endpoint for updating a user
-    @PutMapping("/update")
-    public void updateUser(@RequestBody User user) throws UserNotFoundException {
-        service.updateUser(user.getId());
-    }
-
-    // Endpoint for deleting a user by ID
-    @DeleteMapping("/delete/{userId}")
-    public void deleteUser(@PathVariable int userId) {
-        service.deleteUser(userId);
-    }
-
-    // Endpoint for retrieving all users
     @GetMapping("/all")
     public List<User> getAllUsers() {
         return service.getAllUsers();
     }
-    public ResponseEntity<User> getUserByEmail(String email) throws UserNotFoundException {
-        return new ResponseEntity<>(this.service.getUserByEmail(email), HttpStatus.ACCEPTED);
+    @GetMapping("/by givenName")
+    public List<User> getAllUsersByGivenName(String givenName) throws UserNotFoundException {
+        return service.getAllUsersByGivenName(givenName);
+    }
+    @GetMapping("/by Id")
+    public User getUserById(@PathVariable int userId) throws UserNotFoundException {
+        return service.getUserById(userId);
+    }
+    @PutMapping("")
+    public void updateUser(User user) throws UserNotFoundException {
+        service.updateUser(user);
+    }
+    @DeleteMapping("/by Id")
+    public void deleteUser(@PathVariable int userId) {
+        service.deleteUser(userId);
     }
 }
