@@ -21,7 +21,7 @@ public class UserService {
 
     @PostMapping("create")
     public UserEntity createUser(@RequestBody User user) {
-        return repository.save(UserMapper.toEntity(user));
+        return this.repository.save(UserMapper.toEntity(user));
     }
 
     @GetMapping("all")
