@@ -3,9 +3,9 @@ package com.teclead.solution.controller;
 import com.teclead.solution.exception.UserNotFoundException;
 import com.teclead.solution.model.User;
 import com.teclead.solution.service.UserService;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
