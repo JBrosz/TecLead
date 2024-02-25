@@ -36,6 +36,7 @@ The following access points are implemented so far
 * Swagger 3.0.0
 * Undertow 3.2.2
 * Springdoc 2.3
+* H2 Database 2.2.224
 
 # Reference Documentation
 For further reference, please consider the following sections:
